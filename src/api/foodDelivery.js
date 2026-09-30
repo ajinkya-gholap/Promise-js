@@ -32,12 +32,17 @@ export async function processPayment(order) {
   };
 }
 
+
 // Find delivery partner
+const deliveryPartners = ["Rahul", "Amit", "Om", "Shyam", "Vikram"];
+
 export async function assignDeliveryPartner(order) {
   await delay(1000);
 
+  const randomIndex = Math.floor(Math.random() * deliveryPartners.length);
+
   return {
     ...order,
-    deliveryPartner: "Rahul",
+    deliveryPartner: deliveryPartners[randomIndex],
   };
 }
