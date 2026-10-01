@@ -17,20 +17,27 @@ function App() {
     try {
       log("Creating order...");
 
-      const order = await createOrder();
-
+      const orderPromise = createOrder();
+      console.log("createOrder promise:", orderPromise);    //  createOrder promise pending
+      const order = await orderPromise;
       log(`Order created: ${order.orderId}`);
+      console.log("createOrder promise:", orderPromise);     //  createOrder promisefullfilled
 
-      const paidOrder = await processPayment(order);
-
+      const paymentPromise = processPayment(order);
+      console.log("processPayment promise:", paymentPromise);    //  processPayment promise pending
+      const paidOrder = await paymentPromise;
       log("Payment successful.");
+      console.log("processPayment promise:", paymentPromise);     //  processPayment promise fullfilled
 
-      const finalOrder = await assignDeliveryPartner(paidOrder);
-
+      const deliveryPromise = assignDeliveryPartner(paidOrder);
+      console.log("assignDeliveryPartner promise:", deliveryPromise);    //  assignDeliveryPartner promise pending
+      const finalOrder = await deliveryPromise;
       log(`Delivery partner assigned: ${finalOrder.deliveryPartner}`);
+      console.log("assignDeliveryPartner promise:", deliveryPromise);    //  assignDeliveryPartner promise fullfilled
 
       log("Order confirmed!");
-      console.log(finalOrder);
+      
+      console.log(finalOrder);    //  final information of order
     } catch (error) {
       log(`Order failed: ${error.message}`);
     } finally {
